@@ -18,25 +18,30 @@ export const useGame = ( boardComposable : BoardComposable) => {
 
 
     const ls = useLocalStorage();
-    const gameStateFromStorage = ls.get('gameState')
-    let initialGameState: GameState;
-    if(gameStateFromStorage){
-        initialGameState = deserializeGame(gameStateFromStorage)
-        boardComposable.boardGrid.value = gameStateFromStorage.board.boardGrid
-        boardComposable.penaltyGrid.value = gameStateFromStorage.board.penaltyGrid
-    } else {
-        initialGameState = {
-            ...defaultGame(),
-            board: boardComposable,
+
+
+    const loadGame = () => {
+        const gameStateFromStorage = ls.get('gameState')
+        let initialGameState: GameState;
+        if(gameStateFromStorage){
+            initialGameState = deserializeGame(gameStateFromStorage)
+            boardComposable.boardGrid.value = gameStateFromStorage.board.boardGrid
+            boardComposable.penaltyGrid.value = gameStateFromStorage.board.penaltyGrid
+        } else {
+            initialGameState = {
+                ...defaultGame(),
+                board: boardComposable,
+            }
         }
+        return ref<GameState>(initialGameState);
     }
-
-    const game = ref<GameState>(initialGameState);
-
     const persistGame = () => {
         // @ts-ignore
         ls.set('gameState', serializeGame(game.value))
     }
+
+    const game = loadGame();
+
     persistGame();
 
     const confirmTurn = () => {

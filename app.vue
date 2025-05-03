@@ -73,7 +73,7 @@ const handleResetGame = () => {
     </div>
 
     <div v-if="!isCurrentGameEnded">
-      <div class="lastTurnFieldset">
+      <div v-if="canCurrentGameEnd" class="lastTurnFieldset">
         <input
             type="checkbox"
             id="isLastTurn"
