@@ -2,6 +2,8 @@ import { useBoard } from './useBoard'
 import type { GameState } from '~/types/game'
 import type { BoardComposable } from "~/types/board";
 import {calculateScore} from "~/helper/scoreCalculator";
+import {useLocalStorage} from "~/composables/useLocalStorage";
+import {deserializeGame, serializeGame} from "~/helper/gameSerializer";
 
 const shallowBoard = useBoard();
 const defaultGame = (): GameState => ({
@@ -14,12 +16,28 @@ const defaultGame = (): GameState => ({
 
 export const useGame = ( boardComposable : BoardComposable) => {
 
-    // TODO use storage
 
-    const game = ref<GameState>({
-        ...defaultGame(),
-        board: boardComposable,
-    })
+    const ls = useLocalStorage();
+    const gameStateFromStorage = ls.get('gameState')
+    let initialGameState: GameState;
+    if(gameStateFromStorage){
+        initialGameState = deserializeGame(gameStateFromStorage)
+        boardComposable.boardGrid.value = gameStateFromStorage.board.boardGrid
+        boardComposable.penaltyGrid.value = gameStateFromStorage.board.penaltyGrid
+    } else {
+        initialGameState = {
+            ...defaultGame(),
+            board: boardComposable,
+        }
+    }
+
+    const game = ref<GameState>(initialGameState);
+
+    const persistGame = () => {
+        // @ts-ignore
+        ls.set('gameState', serializeGame(game.value))
+    }
+    persistGame();
 
     const confirmTurn = () => {
         const turnScore = calculateScore( boardComposable.boardGrid.value, boardComposable.penaltyGrid.value, game.value.isLastTurn );
@@ -31,6 +49,8 @@ export const useGame = ( boardComposable : BoardComposable) => {
             game.value.phase = 'ended'
         }
 
+        persistGame();
+
     }
 
     const resetGame = () => {
@@ -39,6 +59,8 @@ export const useGame = ( boardComposable : BoardComposable) => {
             ...defaultGame(),
             board: boardComposable,
         }
+
+        persistGame();
     }
 
     return {
