@@ -2,7 +2,7 @@
 import { useGame } from "@/composables/useGame";
 import { useBoard } from "@/composables/useBoard";
 import { getCellImage, getPenaltyCellValue } from "~/helper/boardHelper";
-import { isGameEnded, canBeLastTurn, canPenaltyCellBeToggled } from "~/helper/gameHelper";
+import { isGameEnded, canBeLastTurn, canPenaltyCellBeToggled, canBoardCellBeToggled } from "~/helper/gameHelper";
 
 const boardComposable = useBoard();
 const { boardGrid, toggleBoardCell, penaltyGrid, togglePenaltyCell } =
@@ -14,6 +14,9 @@ const canCurrentGameEnd = computed(() => canBeLastTurn(game.value));
 
 const handleBoardCellClick = (rowIndex: number, colIndex: number) => {
   if (isCurrentGameEnded.value) {
+    return;
+  }
+  if(!canBoardCellBeToggled(game.value, rowIndex, colIndex)) {
     return;
   }
   toggleBoardCell(rowIndex, colIndex);
