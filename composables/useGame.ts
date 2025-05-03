@@ -1,6 +1,7 @@
 import { useBoard } from './useBoard'
 import type { GameState } from '~/types/game'
 import type { BoardComposable } from "~/types/board";
+import {calculateScore} from "~/helper/scoreCalculator";
 
 const shallowBoard = useBoard();
 const defaultGame = (): GameState => ({
@@ -21,7 +22,8 @@ export const useGame = ( boardComposable : BoardComposable) => {
     })
 
     const confirmTurn = () => {
-        game.value.score += Math.floor(Math.random() * 5)
+        const turnScore = calculateScore( boardComposable.boardGrid.value, boardComposable.penaltyGrid.value, game.value.isLastTurn );
+        game.value.score += turnScore;
         game.value.currentTurn += 1
         boardComposable.resetPenaltyBoard()
 

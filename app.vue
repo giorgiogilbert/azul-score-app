@@ -35,8 +35,8 @@ const handleResetGame = () => {
   <main class="container">
 
     <div class="info">
-      <p><strong>Turno:</strong> {{ game.currentTurn }}</p>
-      <p><strong>Punteggio:</strong> {{ game.score }}</p>
+      <p>Turno: {{ game.currentTurn }}</p>
+      <p>Punteggio: <strong>{{ game.score }}</strong></p>
     </div>
 
     <div class="board">
@@ -112,6 +112,8 @@ h1 {
 
 .info {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 h2 {
