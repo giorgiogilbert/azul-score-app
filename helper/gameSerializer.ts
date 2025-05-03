@@ -1,5 +1,5 @@
 import type { BoardComposable, SerializedBoard } from "~/types/board";
-import type { GameState, SerializedGameState } from "~/types/game";
+import type {GameState, GameTurn, SerializedGameState} from "~/types/game";
 
 export const serializeGame = (game: GameState): SerializedGameState => {
   return {
@@ -8,6 +8,7 @@ export const serializeGame = (game: GameState): SerializedGameState => {
     currentTurn: game.currentTurn,
     isLastTurn: game.isLastTurn,
     phase: game.phase,
+    previousTurns: game.previousTurns.map(serializeTurn),
   } as SerializedGameState;
 };
 
@@ -22,7 +23,17 @@ export const deserializeGame = (game: SerializedGameState): GameState => {
     isLastTurn: game.isLastTurn,
     phase: game.phase,
     board: boardComposable,
+    previousTurns: game.previousTurns,
   };
+};
+
+export const serializeTurn = (turn: GameTurn) => {
+  return {
+    boardGrid: turn.boardGrid,
+    penaltyGrid: turn.penaltyGrid,
+    score: turn.score,
+    turnNumber: turn.turnNumber,
+  } as GameTurn;
 };
 
 export const serializeBoard = (board: BoardComposable) => {

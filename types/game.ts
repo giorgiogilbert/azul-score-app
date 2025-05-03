@@ -1,4 +1,11 @@
-import type { BoardComposable, SerializedBoard } from "./board";
+import type {BoardComposable, BoardGrid, PenaltyGrid, SerializedBoard} from "./board";
+
+export type GameTurn = {
+    boardGrid: BoardGrid;
+    penaltyGrid: PenaltyGrid;
+    score: number;
+    turnNumber: number;
+}
 
 export type GameState = {
   board: BoardComposable;
@@ -6,6 +13,7 @@ export type GameState = {
   currentTurn: number;
   isLastTurn: boolean;
   phase: "playing" | "ended";
+  previousTurns: GameTurn[];
 };
 
 export type SerializedGameState = {
@@ -14,4 +22,5 @@ export type SerializedGameState = {
   currentTurn: GameState["currentTurn"];
   isLastTurn: GameState["isLastTurn"];
   phase: GameState["phase"];
+  previousTurns: GameTurn[];
 };

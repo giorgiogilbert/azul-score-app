@@ -1,5 +1,5 @@
 import { useBoard } from "./useBoard";
-import type { GameState, SerializedGameState } from "~/types/game";
+import type {GameState, GameTurn, SerializedGameState} from "~/types/game";
 import type { BoardComposable } from "~/types/board";
 import { calculateScore } from "~/helper/scoreCalculator";
 import { useLocalStorage } from "~/composables/useLocalStorage";
@@ -12,6 +12,7 @@ const defaultGame = (): GameState => ({
   currentTurn: 1,
   isLastTurn: false,
   phase: "playing",
+  previousTurns: [],
 });
 
 export const useGame = (boardComposable: BoardComposable) => {
@@ -25,8 +26,7 @@ export const useGame = (boardComposable: BoardComposable) => {
     if (gameStateFromStorage) {
       initialGameState = deserializeGame(gameStateFromStorage);
       boardComposable.boardGrid.value = gameStateFromStorage.board.boardGrid;
-      boardComposable.penaltyGrid.value =
-        gameStateFromStorage.board.penaltyGrid;
+      boardComposable.penaltyGrid.value = gameStateFromStorage.board.penaltyGrid;
     } else {
       const defaults = defaultGame();
       initialGameState = {
@@ -34,7 +34,7 @@ export const useGame = (boardComposable: BoardComposable) => {
         board: boardComposable,
       };
     }
-    return ref<GameState>(initialGameState);
+    return ref<GameState>(initialGameState); // TODO fix .ts type error
   };
 
   const game = loadGame();
@@ -46,6 +46,13 @@ export const useGame = (boardComposable: BoardComposable) => {
   persistGame();
 
   const confirmTurn = () => {
+    const turnSnapshot = {
+      boardGrid: boardComposable.boardGrid.value,
+      penaltyGrid: boardComposable.penaltyGrid.value,
+      score: game.value.score,
+      turnNumber: game.value.currentTurn,
+    } as GameTurn;
+    game.value.previousTurns.push(turnSnapshot);
     const turnScore = calculateScore(
       boardComposable.boardGrid.value,
       boardComposable.penaltyGrid.value,

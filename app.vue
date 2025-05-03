@@ -2,7 +2,7 @@
 import { useGame } from "@/composables/useGame";
 import { useBoard } from "@/composables/useBoard";
 import { getCellImage, getPenaltyCellValue } from "~/helper/boardHelper";
-import { isGameEnded, canBeLastTurn } from "~/helper/gameHelper";
+import { isGameEnded, canBeLastTurn, canPenaltyCellBeToggled } from "~/helper/gameHelper";
 
 const boardComposable = useBoard();
 const { boardGrid, toggleBoardCell, penaltyGrid, togglePenaltyCell } =
@@ -20,6 +20,9 @@ const handleBoardCellClick = (rowIndex: number, colIndex: number) => {
 };
 const handlePenaltyCellClick = (colIndex: number) => {
   if (isCurrentGameEnded.value) {
+    return;
+  }
+  if(!canPenaltyCellBeToggled(game.value, colIndex)) {
     return;
   }
   togglePenaltyCell(colIndex);
@@ -83,7 +86,7 @@ const handleResetGame = () => {
           v-model="game.isLastTurn"
           type="checkbox"
           :disabled="!canCurrentGameEnd"
-        />
+        >
         <label for="isLastTurn">Ultimo turno (conteggia bonus)</label>
       </div>
     </div>
