@@ -1,5 +1,6 @@
 import type { GameState } from "~/types/game";
 import {initialBoard} from "~/composables/useBoard";
+import {isRef} from "vue";
 
 export const canBeLastTurn = (game: GameState) => game.currentTurn >= 5;
 
