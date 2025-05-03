@@ -1,5 +1,7 @@
 import type { BoardComposable, SerializedBoard } from "~/types/board";
 import type {GameState, GameTurn, SerializedGameState} from "~/types/game";
+import {isRef} from "vue";
+import {useBoard} from "~/composables/useBoard";
 
 export const serializeGame = (game: GameState): SerializedGameState => {
   return {
