@@ -1,10 +1,10 @@
 import type { BoardGrid, PenaltyGrid } from "~/types/board";
 import { ref } from "vue";
 
-const initialBoard = (): BoardGrid =>
+export const initialBoard = (): BoardGrid =>
   Array.from({ length: 5 }, () => Array(5).fill(false) as boolean[]);
 
-const initialPenaltyGrid = (): PenaltyGrid =>
+export const initialPenaltyGrid = (): PenaltyGrid =>
   Array.from({ length: 7 }, () => false) as boolean[];
 
 export const useBoard = () => {

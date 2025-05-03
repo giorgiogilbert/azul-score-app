@@ -47,8 +47,8 @@ export const useGame = (boardComposable: BoardComposable) => {
 
   const confirmTurn = () => {
     const turnSnapshot = {
-      boardGrid: boardComposable.boardGrid.value,
-      penaltyGrid: boardComposable.penaltyGrid.value,
+      boardGrid: boardComposable.boardGrid.value.map(row => [...row]), // deep clone
+      penaltyGrid: [...boardComposable.penaltyGrid.value],
       score: game.value.score,
       turnNumber: game.value.currentTurn,
     } as GameTurn;
