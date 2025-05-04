@@ -48,10 +48,35 @@ useHead({
     { name: 'description', content: 'Calcola il punteggio del gioco Azul facilmente' }
   ]
 })
+
+let deferredPrompt: any = null
+const canInstall = ref(false)
+
+onMounted(() => {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault()
+    deferredPrompt = e
+    canInstall.value = true
+  })
+})
+
+const triggerInstall = async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt()
+    const { outcome } = await deferredPrompt.userChoice
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt')
+    }
+    deferredPrompt = null
+    canInstall.value = false
+  }
+}
+
 </script>
 
 <template>
   <NuxtPwaManifest />
+  <button v-if="canInstall" @click="triggerInstall" class="install">Installa App</button>
   <main class="container">
     <div class="info">
       <p>Turno: {{ game.currentTurn }}</p>

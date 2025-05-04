@@ -82,7 +82,8 @@ input[type="checkbox"] {
 }
 
 .confirm,
-.reset {
+.reset,
+.install{
     flex: 1;
     padding: 0.5rem;
     font-weight: bold;
@@ -93,6 +94,14 @@ input[type="checkbox"] {
 .confirm {
     background-color: var(--aqua);
     color: white;
+}
+
+.install {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    border: .25rem solid var(--yellow);
+    background-color: var(--blue);
+    color: var(--yellow);
 }
 
 .reset {
