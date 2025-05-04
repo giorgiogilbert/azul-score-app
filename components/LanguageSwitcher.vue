@@ -18,7 +18,7 @@ const localesList = locales.value.filter(l => l.code !== currentLocale).map(l =>
 
 <template>
   <div class="relative inline-block">
-    <button @click="showDropdown = !showDropdown" class="languageSwitcher px-2 py-1 border rounded">
+    <button class="languageSwitcher px-2 py-1 border rounded" @click="showDropdown = !showDropdown" >
       {{ flag(currentLocale) }}
     </button>
     <ul
@@ -26,15 +26,15 @@ const localesList = locales.value.filter(l => l.code !== currentLocale).map(l =>
         class="absolute z-10 mt-2 w-24 bg-white border rounded shadow"
     >
       <li
-          v-for="locale in localesList"
-          :key="locale.code"
+          v-for="l in localesList"
+          :key="l.code"
       >
         <NuxtLink
-            :to="switchLocalePath(locale.code)"
+            :to="switchLocalePath(l.code)"
             class="block px-2 py-1 hover:bg-gray-100"
             @click="showDropdown = false"
         >
-          {{ locale.flag }}
+          {{ l.flag }}
         </NuxtLink>
       </li>
     </ul>
