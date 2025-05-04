@@ -4,6 +4,7 @@ import type { BoardComposable } from "~/types/board";
 import { calculateScore } from "~/helper/scoreCalculator";
 import { useLocalStorage } from "~/composables/useLocalStorage";
 import { deserializeGame, serializeGame } from "~/helper/gameSerializer";
+import type {UiComposable} from "~/types/ui";
 
 const shallowBoard = useBoard();
 const defaultGame = (): GameState => ({
@@ -15,7 +16,7 @@ const defaultGame = (): GameState => ({
   previousTurns: [],
 });
 
-export const useGame = (boardComposable: BoardComposable) => {
+export const useGame = (boardComposable: BoardComposable, uiComposable: UiComposable) => {
   const ls = useLocalStorage();
 
   const loadGame = (): Ref<GameState> => {
@@ -67,6 +68,7 @@ export const useGame = (boardComposable: BoardComposable) => {
     }
 
     persistGame();
+    uiComposable.transitionToNextTurn(turnScore);
   };
 
   const resetGame = () => {
@@ -75,8 +77,8 @@ export const useGame = (boardComposable: BoardComposable) => {
       ...defaultGame(),
       board: boardComposable,
     };
-
     persistGame();
+    uiComposable.newGameStarted();
   };
 
   return {

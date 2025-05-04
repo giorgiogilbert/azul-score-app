@@ -3,11 +3,13 @@ import { useGame } from "@/composables/useGame";
 import { useBoard } from "@/composables/useBoard";
 import { getCellImage, getPenaltyCellValue } from "~/helper/boardHelper";
 import { isGameEnded, canBeLastTurn, canPenaltyCellBeToggled, canBoardCellBeToggled } from "~/helper/gameHelper";
+import {useUi} from "~/composables/useUi";
 
 const boardComposable = useBoard();
+const uiComposable = useUi(window);
 const { boardGrid, toggleBoardCell, penaltyGrid, togglePenaltyCell } =
   boardComposable;
-const { game, resetGame, confirmTurn } = useGame(boardComposable);
+const { game, resetGame, confirmTurn } = useGame(boardComposable, uiComposable);
 
 const isCurrentGameEnded = computed(() => isGameEnded(game.value));
 const canCurrentGameEnd = computed(() => canBeLastTurn(game.value));
@@ -45,7 +47,7 @@ const handleResetGame = () => {
     <div class="info">
       <p>Turno: {{ game.currentTurn }}</p>
       <p>
-        Punteggio: <strong>{{ game.score }}</strong>
+        Punteggio: <strong class="totalScore">{{ game.score }}</strong>
       </p>
     </div>
 
@@ -107,97 +109,10 @@ const handleResetGame = () => {
       <button class="reset" @click="handleResetGame">Nuova Partita</button>
     </div>
   </main>
+
+  <div id="alert" />
 </template>
 
 <style scoped>
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0.5rem;
-  font-family: sans-serif;
-}
 
-h1 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.info {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-h2 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.board {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 1.5rem;
-}
-
-.board-row {
-  display: flex;
-  gap: 0.3rem;
-}
-
-.cell {
-  width: 50px;
-  height: 50px;
-  background-size: cover;
-  background-position: center;
-  font-weight: bold;
-  cursor: pointer;
-  opacity: 0.2;
-  border-radius: 5%;
-  border: none;
-  filter: saturate(20%);
-}
-
-.cell.filled {
-  opacity: 1;
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.7);
-  filter: saturate(100%);
-}
-
-.lastTurnFieldset {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-input[type="checkbox"] {
-  margin-right: 0.5rem;
-  width: 32px;
-  height: 32px;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.confirm,
-.reset {
-  flex: 1;
-  padding: 0.5rem;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-}
-
-.confirm {
-  background-color: #4caf50;
-  color: white;
-}
-
-.reset {
-  background-color: #f44336;
-  color: white;
-}
 </style>
