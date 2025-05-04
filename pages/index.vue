@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useGame } from "@/composables/useGame";
-import { useBoard } from "@/composables/useBoard";
+import { useGame } from "~/composables/useGame";
+import { useBoard } from "~/composables/useBoard";
 import { getCellImage, getPenaltyCellValue } from "~/helper/boardHelper";
 import { isGameEnded, canBeLastTurn, canPenaltyCellBeToggled, canBoardCellBeToggled } from "~/helper/gameHelper";
 import {useUi} from "~/composables/useUi";
 
+const { t, locale } = useI18n()
 
 const boardComposable = useBoard();
 const uiComposable = useUi(window);
@@ -36,7 +37,7 @@ const handlePenaltyCellClick = (colIndex: number) => {
 const handleResetGame = () => {
   if (
     isCurrentGameEnded.value ||
-    confirm("Vuoi resettare la partita? Il punteggio attuale sarà perso.")
+    confirm(t("gameResetConfirmation"))
   ) {
     resetGame();
   }
@@ -45,7 +46,7 @@ const handleResetGame = () => {
 useHead({
   title: 'Azul Score Calculator',
   meta: [
-    { name: 'description', content: 'Calcola il punteggio del gioco Azul facilmente' }
+    { name: 'description', content: 'Calculate Azul score' }
   ]
 })
 
@@ -77,12 +78,15 @@ const triggerInstall = async () => {
 
 <template>
   <NuxtPwaManifest />
-  <button v-if="canInstall" class="install"  @click="triggerInstall" >Installa App</button>
+  <button v-if="canInstall" class="install"  @click="triggerInstall" >{{ $t('installApp') }}</button>
   <main class="container">
+
+
     <div class="info">
-      <p>Turno: {{ game.currentTurn }}</p>
+      <p>{{$t('turn')}}: {{ game.currentTurn }}</p>
+      <LanguageSwitcher />
       <p>
-        Punteggio: <strong class="totalScore">{{ game.score }}</strong>
+        {{$t('score')}}: <strong class="totalScore">{{ game.score }}</strong>
       </p>
     </div>
 
@@ -127,21 +131,21 @@ const triggerInstall = async () => {
           type="checkbox"
           :disabled="!canCurrentGameEnd"
         >
-        <label for="isLastTurn">Ultimo turno (conteggia bonus)</label>
+        <label for="isLastTurn">{{$t("lastTurn")}}</label>
       </div>
     </div>
     <div v-else>
-      <p>Partita terminata</p>
+      <p>{{$t("gameEnded")}}</p>
       <p>
-        Punteggio finale: <b>{{ game.score }}</b>
+        {{$t("finalScore")}}: <b>{{ game.score }}</b>
       </p>
     </div>
 
     <div class="buttons">
       <button v-if="!isCurrentGameEnded" class="confirm" @click="confirmTurn">
-        {{ game.isLastTurn ? "Fine partita" : "Prossimo Turno" }}
+        {{ game.isLastTurn ? t("endGame") : t("nextTurn") }}
       </button>
-      <button class="reset" @click="handleResetGame">Nuova Partita</button>
+      <button class="reset" @click="handleResetGame">{{$t("newGame")}}</button>
     </div>
   </main>
 

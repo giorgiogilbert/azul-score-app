@@ -1,0 +1,13 @@
+{
+  "installApp": "Install app",
+  "lastTurn": "Last turn (calculate bonus)",
+  "gameEnded": "Game ended",
+  "gameResetConfirmation": "Do you want to reset the game? Your score will be lost.",
+  "turn": "Turn",
+  "score": "Score",
+  "finalScore": "Final score",
+  "newGame": "New game",
+  "endGame": "End game",
+  "nextTurn": "Next turn",
+  "newGameStarted": "New game started"
+}

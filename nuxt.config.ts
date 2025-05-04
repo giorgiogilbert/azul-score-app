@@ -2,9 +2,19 @@ import {defineNuxtConfig} from "nuxt/config";
 
 export default defineNuxtConfig({
     ssr: false,
-    modules: ["@nuxt/eslint", "@vite-pwa/nuxt"],
+    modules: ["@nuxt/eslint", "@vite-pwa/nuxt","@nuxtjs/i18n"],
     eslint: {},
     css: ['~/assets/css/style.css'],
+    i18n: {
+        locales: [
+            { code: 'it', iso: 'it-IT', name: 'Italiano', file: 'it.json' },
+            { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
+        ],
+        defaultLocale: 'en',
+        lazy: false,
+        langDir: 'locales/',
+        strategy: 'prefix_except_default',
+    },
     pwa: {
         registerType: 'autoUpdate',
         workbox: {

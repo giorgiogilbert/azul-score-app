@@ -2,6 +2,8 @@ import type {UiComposable} from "~/types/ui";
 
 export const useUi = (window: Window): UiComposable => {
 
+    const { t } = useI18n()
+
     const showFlashMessage = (message: string) => {
         const alertNode = window.document.querySelector('#alert');
         if(alertNode) {
@@ -23,7 +25,7 @@ export const useUi = (window: Window): UiComposable => {
     }
 
     const newGameStarted = () => {
-        showFlashMessage('new game started');
+        showFlashMessage(t('newGameStarted'));
     }
     const transitionToNextTurn = (turnScore: number) => {
         const msg = turnScore > 0 ? '+'+turnScore : turnScore.toString()

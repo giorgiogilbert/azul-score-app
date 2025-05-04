@@ -1,0 +1,13 @@
+{
+  "installApp": "Installa l'app",
+  "turn": "Turno",
+  "score": "Punteggio",
+  "gameResetConfirmation": "Vuoi resettare la partita? Il punteggio attuale sarà perso.",
+  "lastTurn": "Ultimo turno (conteggia bonus)",
+  "gameEnded": "Partita terminata",
+  "finalScore": "Punteggio finale",
+  "newGame": "Nuova partita",
+  "endGame": "Fine partita",
+  "nextTurn": "Prossimo turno",
+  "newGameStarted": "Nuova partita iniziata"
+}
