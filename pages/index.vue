@@ -143,10 +143,10 @@ const triggerInstall = async () => {
       </div>
 
       <div class="buttons">
+        <button :class="isCurrentGameEnded ? 'confirm' : 'reset'" @click="handleResetGame">{{ $t("newGame") }}</button>
         <button v-if="!isCurrentGameEnded" class="confirm" @click="confirmTurn">
           {{ game.isLastTurn ? t("endGame") : t("nextTurn") }}
         </button>
-        <button class="reset" @click="handleResetGame">{{ $t("newGame") }}</button>
       </div>
     </main>
 
