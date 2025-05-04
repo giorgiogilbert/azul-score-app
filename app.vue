@@ -5,6 +5,7 @@ import { getCellImage, getPenaltyCellValue } from "~/helper/boardHelper";
 import { isGameEnded, canBeLastTurn, canPenaltyCellBeToggled, canBoardCellBeToggled } from "~/helper/gameHelper";
 import {useUi} from "~/composables/useUi";
 
+
 const boardComposable = useBoard();
 const uiComposable = useUi(window);
 const { boardGrid, toggleBoardCell, penaltyGrid, togglePenaltyCell } =
@@ -43,6 +44,7 @@ const handleResetGame = () => {
 </script>
 
 <template>
+  <NuxtPwaManifest />
   <main class="container">
     <div class="info">
       <p>Turno: {{ game.currentTurn }}</p>

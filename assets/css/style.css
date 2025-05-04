@@ -135,7 +135,7 @@ input[type="checkbox"] {
     text-align: center;
     font-size: 3rem;
     font-family: sans-serif;
-    border: solid var(--black);
+    border: solid var(--aqua);
     border-width: .5rem 0;
     text-shadow: 0 4px 0 var(--red);
     text-transform: uppercase;

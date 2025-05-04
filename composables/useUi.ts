@@ -26,7 +26,7 @@ export const useUi = (window: Window): UiComposable => {
         showFlashMessage('new game started');
     }
     const transitionToNextTurn = (turnScore: number) => {
-        const msg = turnScore > 0 ? '+'+turnScore : turnScore
+        const msg = turnScore > 0 ? '+'+turnScore : turnScore.toString()
         showFlashMessage(msg);
         animateActiveText('.totalScore');
     }
