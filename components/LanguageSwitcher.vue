@@ -17,7 +17,7 @@ const localesList = locales.value.filter(l => l.code !== currentLocale).map(l =>
 </script>
 
 <template>
-  <div class="relative inline-block">
+  <div class="ls-container">
     <button class="languageSwitcher px-2 py-1 border rounded" @click="showDropdown = !showDropdown" >
       {{ flag(currentLocale) }}
     </button>
@@ -43,14 +43,18 @@ const localesList = locales.value.filter(l => l.code !== currentLocale).map(l =>
 
 
 <style scoped>
+.ls-container {
+  text-align: center;
+}
 .languageSwitcher {
   cursor: pointer;
 }
 ul {
   padding: 0;
-
+  margin: var(--cell-gap);
   li {
     list-style: none;
+    display: inline-block;
     a {
       text-decoration: none;
     }
@@ -63,5 +67,7 @@ ul {
   border-radius: 2px;
   text-align: center;
   background: white;
+  width: 3rem;
+  padding: 0;
 }
 </style>

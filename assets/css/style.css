@@ -25,6 +25,12 @@ body {
     display: flex;
     justify-content: space-between;
 }
+.info > * {
+    flex: 1;
+}
+.info>*:last-child {
+    text-align: right;
+}
 
 h2 {
     margin-top: 1.5rem;
@@ -111,6 +117,14 @@ input[type="checkbox"] {
 .totalScore {
     display: inline-block;
 }
+.finalScore {
+    display: inline-block;
+    font-size: 2rem;
+    color: var(--aqua);
+    border: 4px solid var(--blue);
+    border-radius: 35%;
+    padding: .5rem;
+}
 
 @keyframes blinker {
     0% {
@@ -130,10 +144,10 @@ input[type="checkbox"] {
 #alert {
     box-sizing: border-box;
     position: fixed;
-    top: calc(50% - 100px);
+    top: calc(50% - 200px);
     left: -100%;
     width: 100%;
-    height: 200px;
+    height: 400px;
     background-color: var(--blue);
     color: var(--yellow);
     z-index: 1000;

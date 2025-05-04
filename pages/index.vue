@@ -136,16 +136,15 @@ const triggerInstall = async () => {
         </div>
       </div>
       <div v-else>
-        <p>{{ $t("gameEnded") }}</p>
         <p>
-          {{ $t("finalScore") }}: <b>{{ game.score }}</b>
+          {{ $t("gameEnded") }} - {{ $t("finalScore") }}: <b class="finalScore">{{ game.score }}</b>
         </p>
       </div>
 
       <div class="buttons">
         <button :class="isCurrentGameEnded ? 'confirm' : 'reset'" @click="handleResetGame">{{ $t("newGame") }}</button>
         <button v-if="!isCurrentGameEnded" class="confirm" @click="confirmTurn">
-          {{ game.isLastTurn ? t("endGame") : t("nextTurn") }}
+          {{ game.isLastTurn ? t("endGame")+' ➤➤' : t("nextTurn")+' ➤' }}
         </button>
       </div>
     </main>
