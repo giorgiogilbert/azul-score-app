@@ -41,6 +41,13 @@ const handleResetGame = () => {
     resetGame();
   }
 };
+
+useHead({
+  title: 'Azul Score Calculator',
+  meta: [
+    { name: 'description', content: 'Calcola il punteggio del gioco Azul facilmente' }
+  ]
+})
 </script>
 
 <template>
