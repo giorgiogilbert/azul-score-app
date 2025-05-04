@@ -49,6 +49,7 @@ useHead({
   ]
 })
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let deferredPrompt: any = null
 const canInstall = ref(false)
 
@@ -76,7 +77,7 @@ const triggerInstall = async () => {
 
 <template>
   <NuxtPwaManifest />
-  <button v-if="canInstall" @click="triggerInstall" class="install">Installa App</button>
+  <button v-if="canInstall" class="install"  @click="triggerInstall" >Installa App</button>
   <main class="container">
     <div class="info">
       <p>Turno: {{ game.currentTurn }}</p>
