@@ -20,20 +20,24 @@ export const useGame = (boardComposable: BoardComposable, uiComposable: UiCompos
   const ls = useLocalStorage();
 
   const loadGame = (): Ref<GameState> => {
+
+    const defaults = defaultGame();
+    let initialGameState: GameState = {
+      ...defaults,
+      board: boardComposable,
+    };
+
     const gameStateFromStorage = ls.get(
       "gameState",
     ) as SerializedGameState | null;
-    let initialGameState: GameState;
     if (gameStateFromStorage) {
-      initialGameState = deserializeGame(gameStateFromStorage);
-      boardComposable.boardGrid.value = gameStateFromStorage.board.boardGrid;
-      boardComposable.penaltyGrid.value = gameStateFromStorage.board.penaltyGrid;
-    } else {
-      const defaults = defaultGame();
-      initialGameState = {
-        ...defaults,
-        board: boardComposable,
-      };
+      try {
+        initialGameState = deserializeGame(gameStateFromStorage);
+        boardComposable.boardGrid.value = gameStateFromStorage.board.boardGrid;
+        boardComposable.penaltyGrid.value = gameStateFromStorage.board.penaltyGrid;
+      } catch {
+        console.warn("Error deserializing game state from localStorage, using default state");
+      }
     }
     return ref<GameState>(initialGameState); // TODO fix .ts type error
   };
